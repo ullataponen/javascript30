@@ -26,12 +26,18 @@
 				name="blur"
 				min="0"
 				max="25"
-				value="10"
+				value="0"
 				data-unit="px"
 			/>
 
 			<label for="base">Base Color</label>
 			<input id="base" type="color" name="base" value="#8f2aa3" />
+		</div>
+		<div class="radio">
+			<label for="no-flip">No flip</label>
+			<input id="no-flip" type="radio" name="flip" value="1" />
+			<label for="flip">Flip</label>
+			<input id="flip" type="radio" name="flip" value="-1" />
 		</div>
 
 		<img src="https://source.unsplash.com/7bwQXzbF6KE/800x500" />
@@ -40,13 +46,15 @@
 			:root {
 				--base: #8f2aa3;
 				--spacing: 10px;
-				--blur: 10px;
+				--blur: 0px;
+				--flip: 1;
 			}
 
 			img {
 				padding: var(--spacing);
 				background: var(--base);
 				filter: blur(var(--blur));
+				transform: scaleX(var(--flip));
 			}
 
 			.hl {
@@ -73,6 +81,7 @@
 
 		<script>
 			const inputs = document.querySelectorAll(".controls input");
+			const radio = document.querySelectorAll(".radio input");
 
 			function handleUpdate() {
 				const suffix = this.dataset.unit || "";
@@ -86,6 +95,9 @@
 			inputs.forEach(input =>
 				input.addEventListener("mousemove", handleUpdate)
 			);
+
+			// Radio buttons only on click so hover-over doesn't change image direction
+			radio.forEach(input => input.addEventListener("click", handleUpdate));
 		</script>
 	</body>
 </html>
